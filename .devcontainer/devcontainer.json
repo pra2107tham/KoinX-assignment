@@ -22,5 +22,8 @@
       "onAutoForward": "openPreview"
     }
   },
-  "forwardPorts": [3000]
+  "forwardPorts": [3000],
+  "remoteEnv": {
+      "PORT": "3000"
+   }
 }
