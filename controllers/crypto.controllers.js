@@ -1,9 +1,10 @@
 import Crypto from "../models/crypto.js";
+import CryptoLatest from "../models/cryptoLatest.js"; 
 import axios from "axios";
 
 const getAndSaveCrypto = async (req, res) => {
     const cryptoIds = ['bitcoin', 'matic-network', 'ethereum'];
-    const cryptoToSave = []; // Collect cryptos to save
+    const cryptoToSave = []; 
 
     try {
         for (const id of cryptoIds) {
@@ -20,12 +21,12 @@ const getAndSaveCrypto = async (req, res) => {
             // Check if required properties exist
             if (!cryptoData.market_data || !cryptoData.market_data.current_price) {
                 console.error(`Data format error for ${id}:`, cryptoData);
-                continue; // Skip this entry
+                continue;
             }
 
             // Prepare the crypto object for saving
             const cryptoObject = {
-                name: cryptoData.name,
+                name: cryptoData.name.toLowerCase(),
                 symbol: cryptoData.symbol,
                 price: cryptoData.market_data.current_price.usd,
                 marketCap: cryptoData.market_data.market_cap.usd,
@@ -34,14 +35,22 @@ const getAndSaveCrypto = async (req, res) => {
 
             console.log(`Preparing to save crypto:`, cryptoObject);
             cryptoToSave.push(cryptoObject);
+
+            // Update or create the latest cryptocurrency data
+            await CryptoLatest.findOneAndUpdate(
+                { symbol: cryptoObject.symbol },  // Match by symbol
+                { $set: cryptoObject },          // Update with new data
+                { upsert: true, new: true }      // Create a new document if it doesn't exist
+            );
+            console.log(`Updated latest data for ${cryptoObject.name}`);
         }
 
-        // Save all collected cryptos at once
+        // Save all collected cryptos to historical data collection
         if (cryptoToSave.length > 0) {
             console.log(`Attempting to save ${cryptoToSave.length} cryptocurrencies:`, cryptoToSave);
             try {
                 const savedCryptos = await Crypto.insertMany(cryptoToSave);
-                console.log('Successfully saved cryptocurrencies:', savedCryptos);
+                console.log('Successfully saved historical cryptocurrencies:', savedCryptos);
             } catch (insertError) {
                 console.error('Error saving cryptocurrencies:', insertError);
                 return res.status(500).json({ message: 'Error saving cryptocurrencies to the database' });
@@ -49,11 +58,11 @@ const getAndSaveCrypto = async (req, res) => {
         } else {
             console.log('No cryptocurrencies to save.');
         }
-        console.log('Cryptocurrencies saved successfully') 
+        console.log('Cryptocurrencies saved successfully');
     } catch (error) {
         console.error('Error fetching crypto data:', error);
+        return res.status(500).json({ message: 'Error fetching or saving crypto data' });
     }
 };
 
 export { getAndSaveCrypto };
-

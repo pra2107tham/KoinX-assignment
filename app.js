@@ -4,6 +4,8 @@ import { connectDB } from "./db/connectDB.js";
 import { connectGecko } from "./coingecko/connectgecko.js";
 import cron from "node-cron";
 import { getAndSaveCrypto } from "./controllers/crypto.controllers.js";
+import stats from "./routes/stats.routes.js";
+import deviation from '../routes/deviation.routes.js';
 
 const app = express();
 
@@ -32,6 +34,9 @@ const startApp = async () => {
     await connectGecko();
     console.log("Successfully connected to CoinGecko API.");
 
+    // Fetch and save crypto data on app start
+    await getAndSaveCrypto();
+
     // Schedule the cron job to fetch and save crypto data every 2 hours
     cron.schedule("0 */2 * * *", async () => {
       console.log("Running scheduled task to fetch and save crypto data...");
@@ -56,6 +61,8 @@ const startApp = async () => {
 
 // Start the app after connecting to the DB
 startApp();
+app.use(stats);
+app.use(deviation);
 
 // Global error handling
 process.on("unhandledRejection", (reason, promise) => {
