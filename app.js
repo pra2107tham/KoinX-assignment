@@ -5,7 +5,7 @@ import { connectGecko } from "./coingecko/connectgecko.js";
 import cron from "node-cron";
 import { getAndSaveCrypto } from "./controllers/crypto.controllers.js";
 import stats from "./routes/stats.routes.js";
-import deviation from '../routes/deviation.routes.js';
+import deviation from './routes/deviation.routes.js';
 
 const app = express();
 

@@ -5,7 +5,7 @@ import CryptoLatest from '../models/cryptoLatest.js';
 
 const router = express.Router();
 
-router.get('/stats/', async (req, res) => {
+router.get('/stats', async (req, res) => {
     const { coin } = req.query;
 
     // Validate that the coin parameter is provided
