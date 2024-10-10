@@ -34,8 +34,8 @@ const startApp = async () => {
     await connectGecko();
     console.log("Successfully connected to CoinGecko API.");
 
-    // Fetch and save crypto data on app start
-    await getAndSaveCrypto();
+    // // Fetch and save crypto data on app start
+    // await getAndSaveCrypto();
 
     // Schedule the cron job to fetch and save crypto data every 2 hours
     cron.schedule("0 */2 * * *", async () => {
