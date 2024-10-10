@@ -1,1 +1,14 @@
 2024-10-10T15:57:27.324Z [INFO]: Fetched stats for bitcoin
+2024-10-10T16:00:00.122Z [INFO]: Fetching data for bitcoin...
+2024-10-10T16:00:00.500Z [INFO]: Prepared crypto data for saving: {"name":"bitcoin","symbol":"btc","price":60689,"marketCap":1199570251503,"change24h":-2.54408}
+2024-10-10T16:00:00.523Z [INFO]: Updated latest data for bitcoin
+2024-10-10T16:00:00.523Z [INFO]: Fetching data for matic-network...
+2024-10-10T16:00:00.876Z [INFO]: Prepared crypto data for saving: {"name":"polygon","symbol":"matic","price":0.36737,"marketCap":986569692,"change24h":-1.77301}
+2024-10-10T16:00:00.887Z [INFO]: Updated latest data for polygon
+2024-10-10T16:00:00.887Z [INFO]: Fetching data for ethereum...
+2024-10-10T16:00:01.227Z [INFO]: Prepared crypto data for saving: {"name":"ethereum","symbol":"eth","price":2399.27,"marketCap":288314577092,"change24h":-2.38554}
+2024-10-10T16:00:01.237Z [INFO]: Updated latest data for ethereum
+2024-10-10T16:00:01.237Z [INFO]: Attempting to save 3 cryptocurrencies.
+2024-10-10T16:00:01.257Z [INFO]: Successfully saved historical cryptocurrencies:
+2024-10-10T16:00:01.257Z [INFO]: Cryptocurrencies saved successfully
+2024-10-10T16:00:01.258Z [ERROR]: Error fetching or saving crypto data: Cannot read properties of undefined (reading 'status')
